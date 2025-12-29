@@ -1,0 +1,13 @@
+Third-Party Notices
+
+This project includes third-party components. Licenses may require that you include license text and/or attribution in your distribution.
+
+Dependencies (from package.json):
+- d3 (license: ISC)
+- @types/d3 (license: MIT)
+- powerbi-visuals-api (license: MIT)
+- powerbi-visuals-utils-formattingmodel (license: MIT)
+
+For full license texts, review the corresponding packages under node_modules and their published license information.
+
+Support: dpandeycse@gmail.com

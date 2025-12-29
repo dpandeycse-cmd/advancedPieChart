@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# Power BI Visuals tooling
+.pbiviz_ext/
+.tmp/
+
+# Build outputs
+/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Reports
+webpack.statistics.*

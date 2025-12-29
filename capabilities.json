@@ -1,0 +1,136 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Category",
+            "name": "category",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Measure",
+            "name": "measure",
+            "kind": "Measure"
+        }
+    ],
+    
+    "objects": {
+        "dataPoint": {
+            "properties": {
+                "defaultColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "showAllDataPoints": { "type": { "bool": true } },
+                "fill": { "type": { "fill": { "solid": { "color": true } } } },
+                "fillRule": { "type": { "fill": {} } },
+                "fontSize": { "type": { "formatting": { "fontSize": true } } }
+            }
+        },
+        "general": {
+            "displayName": "General",
+            "properties": {
+                "donut": { "type": { "bool": true } },
+                "innerRadius": { "type": { "numeric": true } },
+                "backgroundColor": { "displayName": "Background color", "type": { "fill": { "solid": { "color": true } } } },
+                "showLegend": { "type": { "bool": true } },
+                "legendPlacement": {
+                    "displayName": "Legend placement",
+                    "type": {
+                        "enumeration": [
+                            { "value": "auto", "displayName": "Auto" },
+                            { "value": "right", "displayName": "Right" },
+                            { "value": "left", "displayName": "Left" },
+                            { "value": "top", "displayName": "Top" },
+                            { "value": "bottom", "displayName": "Bottom" }
+                        ]
+                    }
+                },
+                "legendLayout": {
+                    "displayName": "Legend layout",
+                    "type": {
+                        "enumeration": [
+                            { "value": "list", "displayName": "List" },
+                            { "value": "row", "displayName": "Row" }
+                        ]
+                    }
+                },
+                "sortByValue": { "type": { "bool": true } },
+                "animation": { "type": { "bool": true } },
+                "showTooltips": { "type": { "bool": true } },
+                "showOverview": { "displayName": "Show overview panel", "type": { "bool": true } },
+                "animationType": { "displayName": "Animation type", "type": { "enumeration": [ { "value": "none", "displayName": "None" }, { "value": "grow", "displayName": "Grow" }, { "value": "explode", "displayName": "Explode" }, { "value": "spin", "displayName": "Spin" }, { "value": "fade", "displayName": "Fade" } ] } },
+                "animationDuration": { "displayName": "Animation duration (ms)", "type": { "numeric": true } }
+                ,
+                "hoverAnimationType": { "displayName": "Hover animation type", "type": { "enumeration": [ { "value": "none", "displayName": "None" }, { "value": "grow", "displayName": "Grow" }, { "value": "explode", "displayName": "Explode" }, { "value": "pulse", "displayName": "Pulse" }, { "value": "color", "displayName": "Color" }, { "value": "tilt", "displayName": "Tilt" } ] } },
+                "hoverAnimationDuration": { "displayName": "Hover animation duration (ms)", "type": { "numeric": true } }
+            }
+        }
+        ,
+        "detailLabels": {
+            "displayName": "Detail labels",
+            "properties": {
+                "showDetailLabels": { "type": { "bool": true } },
+                "detailLabelMode": {
+                    "displayName": "Detail label mode",
+                    "type": {
+                        "enumeration": [
+                            { "value": "category", "displayName": "Category" },
+                            { "value": "dataValue", "displayName": "Data value" },
+                            { "value": "percent", "displayName": "Percent of total" },
+                            { "value": "categoryDataValue", "displayName": "Category, data value" },
+                            { "value": "categoryPercent", "displayName": "Category, percent of total" },
+                            { "value": "dataValuePercent", "displayName": "Data value, percent of total" },
+                            { "value": "all", "displayName": "All detail labels" }
+                        ]
+                    }
+                },
+                "detailLabelPlacement": {
+                    "displayName": "Label placement",
+                    "type": {
+                        "enumeration": [
+                            { "value": "outside", "displayName": "Outside" },
+                            { "value": "inside", "displayName": "Inside" }
+                        ]
+                    }
+                },
+                "detailLabelFontColor": { "displayName": "Label color", "type": { "fill": { "solid": { "color": true } } } },
+                "detailLabelDisplayUnits": {
+                    "displayName": "Display units",
+                    "type": {
+                        "enumeration": [
+                            { "value": "auto", "displayName": "Auto" },
+                            { "value": "none", "displayName": "None" },
+                            { "value": "thousands", "displayName": "Thousands" },
+                            { "value": "millions", "displayName": "Millions" },
+                            { "value": "billions", "displayName": "Billions" }
+                        ]
+                    }
+                },
+                "valueDecimalPlaces": { "displayName": "Value decimal places", "type": { "numeric": true } },
+                "percentageDecimalPlaces": { "displayName": "Percentage decimal places", "type": { "numeric": true } }
+            }
+        }
+    },
+    "dataViewMappings": [
+        {
+            "categorical": {
+                "categories": {
+                    "for": {
+                        "in": "category"
+                    },
+                    "dataReductionAlgorithm": {
+                        "top": {}
+                    }
+                },
+                "values": {
+                    "select": [
+                        {
+                            "bind": {
+                                "to": "measure"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "privileges": []
+}

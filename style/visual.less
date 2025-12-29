@@ -1,0 +1,200 @@
+:root {
+    --visual-surface: #f4f6fb;
+    --legend-surface: rgba(255, 255, 255, 0.88);
+    --legend-border: rgba(79, 95, 125, 0.12);
+    --highlight: #4e79a7;
+    --shadow: 0 20px 40px rgba(15, 26, 50, 0.12);
+}
+
+.adv-tooltip {
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    pointer-events: none;
+    box-shadow: 0 12px 24px rgba(12, 16, 38, 0.45);
+}
+
+.adv-tooltip__label {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.adv-tooltip__value {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.pie-chart {
+    filter: drop-shadow(var(--shadow));
+    border-radius: 16px;
+    background: var(--visual-background, radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9), rgba(245, 247, 255, 0.95) 60%, rgba(233, 238, 247, 0.9)));
+    transition: transform 0.6s ease;
+}
+
+.slice {
+    transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 6px 12px rgba(10, 20, 44, 0.18));
+}
+
+.slice-label {
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    font-size: 11px;
+    fill: #1f2533;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.slice-label--outside {
+    fill: #1b2233;
+}
+
+.slice-connector {
+    fill: none;
+    stroke: rgba(31, 38, 63, 0.35);
+    stroke-width: 1px;
+    stroke-linecap: round;
+    opacity: 0.8;
+}
+
+.slice:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 14px 18px rgba(15, 26, 50, 0.27));
+}
+
+.slice-selected {
+    stroke: #ffffff;
+    stroke-width: 4px;
+    filter: drop-shadow(0 16px 20px rgba(30, 70, 140, 0.25));
+}
+
+.slice-dimmed {
+    opacity: 0.3 !important;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    font-size: 12px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    max-width: none;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.legend-pill {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.legend-item--selected {
+    background: rgba(78, 121, 167, 0.15);
+}
+
+.legend-item--dimmed {
+    opacity: 0.45;
+}
+
+.detail-panel {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 260px;
+    max-width: calc(100% - 32px);
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(49, 64, 115, 0.1);
+    box-shadow: 8px 14px 32px rgba(14, 28, 65, 0.2);
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    color: #1b2233;
+    pointer-events: none;
+}
+
+.detail-panel__title {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5c6479;
+    margin-bottom: 10px;
+}
+
+.detail-panel__metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.detail-panel__metric-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7b8299;
+    letter-spacing: 0.2em;
+}
+
+.detail-panel__metric-value {
+    font-size: 20px;
+    color: #1b2233;
+}
+
+.detail-panel__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-panel__stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #2d364f;
+}
+
+.detail-panel__stat-label {
+    opacity: 0.65;
+}
+
+.detail-panel__stat-value {
+    font-weight: 600;
+}
+
+.detail-panel__prompt {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #5d667b;
+    line-height: 1.3;
+}
+
+.visual-error {
+    white-space: pre-wrap;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+}
