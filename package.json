@@ -1,6 +1,6 @@
 {
-  "name": "advancedpiechart-powerbi-visual",
-  "description": "Power BI custom visual: Advanced Pie Chart",
+  "name": "financialmatrixpro-powerbi-visual",
+  "description": "Power BI custom visual: Financial Matrix Pro",
   "version": "1.0.0.0",
   "license": "MIT",
   "scripts": {

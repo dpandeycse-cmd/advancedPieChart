@@ -1,136 +1,588 @@
 {
-    "dataRoles": [
-        {
-            "displayName": "Category",
-            "name": "category",
-            "kind": "Grouping"
-        },
-        {
-            "displayName": "Measure",
-            "name": "measure",
-            "kind": "Measure"
-        }
-    ],
-    
-    "objects": {
-        "dataPoint": {
-            "properties": {
-                "defaultColor": {
-                    "type": { "fill": { "solid": { "color": true } } }
-                },
-                "showAllDataPoints": { "type": { "bool": true } },
-                "fill": { "type": { "fill": { "solid": { "color": true } } } },
-                "fillRule": { "type": { "fill": {} } },
-                "fontSize": { "type": { "formatting": { "fontSize": true } } }
-            }
-        },
-        "general": {
-            "displayName": "General",
-            "properties": {
-                "donut": { "type": { "bool": true } },
-                "innerRadius": { "type": { "numeric": true } },
-                "backgroundColor": { "displayName": "Background color", "type": { "fill": { "solid": { "color": true } } } },
-                "showLegend": { "type": { "bool": true } },
-                "legendPlacement": {
-                    "displayName": "Legend placement",
-                    "type": {
-                        "enumeration": [
-                            { "value": "auto", "displayName": "Auto" },
-                            { "value": "right", "displayName": "Right" },
-                            { "value": "left", "displayName": "Left" },
-                            { "value": "top", "displayName": "Top" },
-                            { "value": "bottom", "displayName": "Bottom" }
-                        ]
-                    }
-                },
-                "legendLayout": {
-                    "displayName": "Legend layout",
-                    "type": {
-                        "enumeration": [
-                            { "value": "list", "displayName": "List" },
-                            { "value": "row", "displayName": "Row" }
-                        ]
-                    }
-                },
-                "sortByValue": { "type": { "bool": true } },
-                "animation": { "type": { "bool": true } },
-                "showTooltips": { "type": { "bool": true } },
-                "showOverview": { "displayName": "Show overview panel", "type": { "bool": true } },
-                "animationType": { "displayName": "Animation type", "type": { "enumeration": [ { "value": "none", "displayName": "None" }, { "value": "grow", "displayName": "Grow" }, { "value": "explode", "displayName": "Explode" }, { "value": "spin", "displayName": "Spin" }, { "value": "fade", "displayName": "Fade" } ] } },
-                "animationDuration": { "displayName": "Animation duration (ms)", "type": { "numeric": true } }
-                ,
-                "hoverAnimationType": { "displayName": "Hover animation type", "type": { "enumeration": [ { "value": "none", "displayName": "None" }, { "value": "grow", "displayName": "Grow" }, { "value": "explode", "displayName": "Explode" }, { "value": "pulse", "displayName": "Pulse" }, { "value": "color", "displayName": "Color" }, { "value": "tilt", "displayName": "Tilt" } ] } },
-                "hoverAnimationDuration": { "displayName": "Hover animation duration (ms)", "type": { "numeric": true } }
-            }
-        }
-        ,
-        "detailLabels": {
-            "displayName": "Detail labels",
-            "properties": {
-                "showDetailLabels": { "type": { "bool": true } },
-                "detailLabelMode": {
-                    "displayName": "Detail label mode",
-                    "type": {
-                        "enumeration": [
-                            { "value": "category", "displayName": "Category" },
-                            { "value": "dataValue", "displayName": "Data value" },
-                            { "value": "percent", "displayName": "Percent of total" },
-                            { "value": "categoryDataValue", "displayName": "Category, data value" },
-                            { "value": "categoryPercent", "displayName": "Category, percent of total" },
-                            { "value": "dataValuePercent", "displayName": "Data value, percent of total" },
-                            { "value": "all", "displayName": "All detail labels" }
-                        ]
-                    }
-                },
-                "detailLabelPlacement": {
-                    "displayName": "Label placement",
-                    "type": {
-                        "enumeration": [
-                            { "value": "outside", "displayName": "Outside" },
-                            { "value": "inside", "displayName": "Inside" }
-                        ]
-                    }
-                },
-                "detailLabelFontColor": { "displayName": "Label color", "type": { "fill": { "solid": { "color": true } } } },
-                "detailLabelDisplayUnits": {
-                    "displayName": "Display units",
-                    "type": {
-                        "enumeration": [
-                            { "value": "auto", "displayName": "Auto" },
-                            { "value": "none", "displayName": "None" },
-                            { "value": "thousands", "displayName": "Thousands" },
-                            { "value": "millions", "displayName": "Millions" },
-                            { "value": "billions", "displayName": "Billions" }
-                        ]
-                    }
-                },
-                "valueDecimalPlaces": { "displayName": "Value decimal places", "type": { "numeric": true } },
-                "percentageDecimalPlaces": { "displayName": "Percentage decimal places", "type": { "numeric": true } }
-            }
-        }
+  "supportsKeyboardFocus": true,
+  "supportsMultiVisualSelection": false,
+  "dataRoles": [
+    { "displayName": "Column", "name": "column", "kind": "Grouping" },
+    { "displayName": "Row", "name": "category", "kind": "Grouping" },
+    { "displayName": "Group", "name": "group", "kind": "Grouping" },
+    { "displayName": "Format by fields (CF)", "name": "formatByField", "kind": "Grouping" },
+    { "displayName": "Custom table value fields", "name": "customTableValueField", "kind": "Grouping" },
+    { "displayName": "Values", "name": "values", "kind": "Measure" },
+    { "displayName": "Plan", "name": "plan", "kind": "Measure" },
+    { "displayName": "Forecast", "name": "forecast", "kind": "Measure" },
+    { "displayName": "Format by (CF)", "name": "formatBy", "kind": "Measure" },
+    { "displayName": "Custom table values", "name": "customTableValue", "kind": "Measure" },
+    { "displayName": "Tooltips", "name": "tooltips", "kind": "Measure" },
+    { "displayName": "Comments", "name": "comments", "kind": "Grouping" },
+    { "displayName": "Filters", "name": "filters", "kind": "Grouping" },
+    { "displayName": "Category class", "name": "categoryClass", "kind": "Grouping" }
+  ],
+  "objects": {
+    "conditionalFormatting": {
+      "displayName": "Conditional Formatting",
+      "properties": {
+        "enabled": { "displayName": "Enable", "type": { "bool": true } },
+        "showEditor": { "displayName": "Open editor", "type": { "bool": true } },
+        "rulesJson": { "displayName": "Rules (internal)", "type": { "text": true } }
+      }
     },
-    "dataViewMappings": [
-        {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
-                }
-            }
+    "customTable": {
+      "displayName": "Custom Table",
+      "properties": {
+        "enabled": { "displayName": "Custom table", "type": { "bool": true } },
+        "showEditor": { "displayName": "Open table editor", "type": { "bool": true } },
+        "tableJson": { "displayName": "Custom table JSON", "type": { "text": true } }
+      }
+    },
+    "table": {
+      "displayName": "Table",
+      "properties": {
+        "preset": {
+          "displayName": "Preset",
+          "type": {
+            "enumeration": [
+              { "value": "custom", "displayName": "Custom" },
+              { "value": "clean", "displayName": "Clean" },
+              { "value": "compact", "displayName": "Compact" },
+              { "value": "softZebra", "displayName": "Soft zebra" },
+
+              { "value": "minimal", "displayName": "Minimal" },
+              { "value": "minimalZebra", "displayName": "Minimal zebra" },
+              { "value": "ledger", "displayName": "Ledger" },
+              { "value": "ledgerZebra", "displayName": "Ledger zebra" },
+              { "value": "statement", "displayName": "Statement" },
+              { "value": "statementZebra", "displayName": "Statement zebra" },
+              { "value": "spreadsheet", "displayName": "Spreadsheet" },
+              { "value": "spreadsheetZebra", "displayName": "Spreadsheet zebra" },
+              { "value": "boxed", "displayName": "Boxed" },
+              { "value": "boxedZebra", "displayName": "Boxed zebra" },
+              { "value": "airy", "displayName": "Airy" },
+              { "value": "airyZebra", "displayName": "Airy zebra" },
+              { "value": "boldGrid", "displayName": "Bold grid" },
+              { "value": "boldGridZebra", "displayName": "Bold grid zebra" },
+              { "value": "dottedGrid", "displayName": "Dotted grid" },
+              { "value": "dashedGrid", "displayName": "Dashed grid" },
+              { "value": "blueprint", "displayName": "Blueprint" },
+              { "value": "blueprintZebra", "displayName": "Blueprint zebra" },
+              { "value": "mono", "displayName": "Mono" },
+              { "value": "monoZebra", "displayName": "Mono zebra" },
+
+              { "value": "card", "displayName": "Card" },
+              { "value": "cardZebra", "displayName": "Card zebra" },
+              { "value": "underlineHeader", "displayName": "Underline header" },
+              { "value": "underlineHeaderZebra", "displayName": "Underline header zebra" },
+              { "value": "borderlessDividers", "displayName": "Borderless dividers" },
+              { "value": "borderlessDividersZebra", "displayName": "Borderless dividers zebra" },
+              { "value": "columnDividers", "displayName": "Column dividers" },
+              { "value": "columnDividersZebra", "displayName": "Column dividers zebra" },
+              { "value": "groupDivider", "displayName": "Group divider" },
+              { "value": "groupDividerZebra", "displayName": "Group divider zebra" },
+
+              { "value": "premiumSoft", "displayName": "Premium soft cards" },
+              { "value": "premiumSoftZebra", "displayName": "Premium soft cards zebra" },
+              { "value": "premiumAccent", "displayName": "Premium accent stripe" },
+              { "value": "premiumAccentZebra", "displayName": "Premium accent stripe zebra" },
+              { "value": "premiumCompact", "displayName": "Premium compact" },
+              { "value": "premiumCompactZebra", "displayName": "Premium compact zebra" }
+            ]
+          }
+        },
+        "backgroundColor": { "displayName": "Background", "type": { "fill": { "solid": { "color": true } } } },
+        "showGrid": { "displayName": "Show grid", "type": { "bool": true } },
+        "horizontalGrid": { "displayName": "Horizontal grid", "type": { "bool": true } },
+        "horizontalGridColor": { "displayName": "Horizontal grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "horizontalGridThickness": { "displayName": "Horizontal grid thickness", "type": { "numeric": true } },
+        "horizontalGridStyle": {
+          "displayName": "Horizontal grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+        "verticalGrid": { "displayName": "Vertical grid", "type": { "bool": true } },
+        "verticalGridColor": { "displayName": "Vertical grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "verticalGridThickness": { "displayName": "Vertical grid thickness", "type": { "numeric": true } },
+        "verticalGridStyle": {
+          "displayName": "Vertical grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+        "grandTotalGrid": { "displayName": "Grand total grid", "type": { "bool": true } },
+        "grandTotalGridColor": { "displayName": "Grand total grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalGridThickness": { "displayName": "Grand total grid thickness", "type": { "numeric": true } },
+        "grandTotalGridStyle": {
+          "displayName": "Grand total grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+        "subtotalGrid": { "displayName": "Subtotal grid", "type": { "bool": true } },
+        "subtotalGridColor": { "displayName": "Subtotal grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalGridThickness": { "displayName": "Subtotal grid thickness", "type": { "numeric": true } },
+        "subtotalGridStyle": {
+          "displayName": "Subtotal grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+        "columnTotalGrid": { "displayName": "Column total grid", "type": { "bool": true } },
+        "columnTotalGridColor": { "displayName": "Column total grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalGridThickness": { "displayName": "Column total grid thickness", "type": { "numeric": true } },
+        "columnTotalGridStyle": {
+          "displayName": "Column total grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+        "zebra": { "displayName": "Zebra rows", "type": { "bool": true } },
+        "columnWidthMode": {
+          "displayName": "Column width",
+          "type": {
+            "enumeration": [
+              { "value": "auto", "displayName": "Auto" },
+              { "value": "manual", "displayName": "Manual" }
+            ]
+          }
+        },
+        "columnWidthPx": { "displayName": "Column width (px)", "type": { "numeric": true } },
+        "rowHeaderWidthPx": { "displayName": "Row header width (px)", "type": { "numeric": true } },
+        "wrapText": { "displayName": "Wrap text (no hide)", "type": { "bool": true } },
+        "freezeHeader": { "displayName": "Freeze header while scrolling", "type": { "bool": true } },
+        "freezeRowHeaders": { "displayName": "Freeze row headers while scrolling", "type": { "bool": true } }
+      }
+    },
+    "header": {
+      "displayName": "Header",
+      "properties": {
+        "show": { "displayName": "Show header", "type": { "bool": true } },
+        "columnHierarchy": { "displayName": "Column hierarchy", "type": { "bool": true } },
+        "backgroundColor": { "displayName": "Header background", "type": { "fill": { "solid": { "color": true } } } },
+        "fontColor": { "displayName": "Header font color", "type": { "fill": { "solid": { "color": true } } } },
+        "fontSize": { "displayName": "Header font size", "type": { "numeric": true } },
+        "fontFamily": {
+          "displayName": "Header font",
+          "type": {
+            "enumeration": [
+              { "value": "Segoe UI", "displayName": "Segoe UI" },
+              { "value": "Arial", "displayName": "Arial" },
+              { "value": "Calibri", "displayName": "Calibri" }
+            ]
+          }
+        },
+        "textAlign": {
+          "displayName": "Header alignment",
+          "type": {
+            "enumeration": [
+              { "value": "left", "displayName": "Left" },
+              { "value": "center", "displayName": "Center" },
+              { "value": "right", "displayName": "Right" }
+            ]
+          }
         }
-    ],
-    "privileges": []
+      }
+    },
+    "rows": {
+      "displayName": "Rows",
+      "properties": {
+        "rowHeight": { "displayName": "Row height (px)", "type": { "numeric": true } },
+        "hierarchyView": { "displayName": "Hierarchy view", "type": { "bool": true } },
+        "labelPaddingLeft": { "displayName": "Label left padding (px)", "type": { "numeric": true } },
+        "indentSize": { "displayName": "Indent size (px)", "type": { "numeric": true } },
+        "autoAggregateParents": { "displayName": "Auto aggregate parents", "type": { "bool": true } },
+        "blankAsZero": { "displayName": "Treat blanks as zero", "type": { "bool": true } },
+        "parentBold": { "displayName": "Parent bold", "type": { "bool": true } },
+        "parentFontColor": { "displayName": "Parent font color", "type": { "fill": { "solid": { "color": true } } } },
+        "parentBackground": { "displayName": "Parent background", "type": { "fill": { "solid": { "color": true } } } },
+        "parentFontSize": { "displayName": "Parent font size", "type": { "numeric": true } },
+        "parentFontFamily": {
+          "displayName": "Parent font",
+          "type": {
+            "enumeration": [
+              { "value": "Segoe UI", "displayName": "Segoe UI" },
+              { "value": "Arial", "displayName": "Arial" },
+              { "value": "Calibri", "displayName": "Calibri" }
+            ]
+          }
+        },
+        "parentTextAlign": {
+          "displayName": "Parent alignment",
+          "type": {
+            "enumeration": [
+              { "value": "left", "displayName": "Left" },
+              { "value": "center", "displayName": "Center" },
+              { "value": "right", "displayName": "Right" }
+            ]
+          }
+        },
+        "childFontColor": { "displayName": "Child font color", "type": { "fill": { "solid": { "color": true } } } },
+        "childBackground": { "displayName": "Child background", "type": { "fill": { "solid": { "color": true } } } },
+        "childFontSize": { "displayName": "Child font size", "type": { "numeric": true } },
+        "childFontFamily": {
+          "displayName": "Child font",
+          "type": {
+            "enumeration": [
+              { "value": "Segoe UI", "displayName": "Segoe UI" },
+              { "value": "Arial", "displayName": "Arial" },
+              { "value": "Calibri", "displayName": "Calibri" }
+            ]
+          }
+        },
+        "childTextAlign": {
+          "displayName": "Child alignment",
+          "type": {
+            "enumeration": [
+              { "value": "left", "displayName": "Left" },
+              { "value": "center", "displayName": "Center" },
+              { "value": "right", "displayName": "Right" }
+            ]
+          }
+        },
+        "showGrandTotal": { "displayName": "Row level total (Grand total)", "type": { "bool": true } },
+        "showSubtotals": { "displayName": "Sub row level total (Subtotals)", "type": { "bool": true } },
+        "showColumnTotal": { "displayName": "Column level total", "type": { "bool": true } },
+        "grandTotalLabel": { "displayName": "Grand total label", "type": { "text": true } },
+        "subtotalLabelTemplate": { "displayName": "Subtotal label template", "type": { "text": true } },
+        "columnTotalLabel": { "displayName": "Column total label", "type": { "text": true } },
+        "totalsBold": { "displayName": "Totals bold", "type": { "bool": true } },
+        "totalsFontColor": { "displayName": "Totals font color", "type": { "fill": { "solid": { "color": true } } } },
+        "totalsBackground": { "displayName": "Totals background", "type": { "fill": { "solid": { "color": true } } } },
+        "totalsFontFamily": {
+          "displayName": "Totals font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" },
+            { "value": "Tahoma", "displayName": "Tahoma" },
+            { "value": "Verdana", "displayName": "Verdana" }
+          ] }
+        },
+        "totalsFontSize": { "displayName": "Totals font size", "type": { "numeric": true } },
+        "totalsLabelAlign": {
+          "displayName": "Totals label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "totalsValueAlign": {
+          "displayName": "Totals value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+
+        "grandTotalBold": { "displayName": "Grand total bold", "type": { "bool": true } },
+        "grandTotalFontColor": { "displayName": "Grand total font color", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalBackground": { "displayName": "Grand total background", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalFontFamily": {
+          "displayName": "Grand total font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "grandTotalFontSize": { "displayName": "Grand total font size", "type": { "numeric": true } },
+        "grandTotalLabelAlign": {
+          "displayName": "Grand total label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "grandTotalValueAlign": {
+          "displayName": "Grand total value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+
+        "subtotalBold": { "displayName": "Subtotal bold", "type": { "bool": true } },
+        "subtotalFontColor": { "displayName": "Subtotal font color", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalBackground": { "displayName": "Subtotal background", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalFontFamily": {
+          "displayName": "Subtotal font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "subtotalFontSize": { "displayName": "Subtotal font size", "type": { "numeric": true } },
+        "subtotalLabelAlign": {
+          "displayName": "Subtotal label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "subtotalValueAlign": {
+          "displayName": "Subtotal value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+
+        "columnTotalBold": { "displayName": "Column total bold", "type": { "bool": true } },
+        "columnTotalFontColor": { "displayName": "Column total font color", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalBackground": { "displayName": "Column total background", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalFontFamily": {
+          "displayName": "Column total font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "columnTotalFontSize": { "displayName": "Column total font size", "type": { "numeric": true } },
+        "columnTotalLabelAlign": {
+          "displayName": "Column total label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "columnTotalValueAlign": {
+          "displayName": "Column total value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        }
+      }
+    },
+
+    "totals": {
+      "displayName": "Totals",
+      "properties": {
+        "showGrandTotal": { "displayName": "Show grand total", "type": { "bool": true } },
+        "showSubtotals": { "displayName": "Show subtotals", "type": { "bool": true } },
+        "showColumnTotal": { "displayName": "Show column total", "type": { "bool": true } },
+        "grandTotalLabel": { "displayName": "Grand total label", "type": { "text": true } },
+        "subtotalLabelTemplate": { "displayName": "Subtotal label template", "type": { "text": true } },
+        "columnTotalLabel": { "displayName": "Column total label", "type": { "text": true } },
+
+        "grandTotalGrid": { "displayName": "Grand total grid", "type": { "bool": true } },
+        "grandTotalGridColor": { "displayName": "Grand total grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalGridThickness": { "displayName": "Grand total grid thickness", "type": { "numeric": true } },
+        "grandTotalGridStyle": {
+          "displayName": "Grand total grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+
+        "subtotalGrid": { "displayName": "Subtotal grid", "type": { "bool": true } },
+        "subtotalGridColor": { "displayName": "Subtotal grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalGridThickness": { "displayName": "Subtotal grid thickness", "type": { "numeric": true } },
+        "subtotalGridStyle": {
+          "displayName": "Subtotal grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+
+        "columnTotalGrid": { "displayName": "Column total grid", "type": { "bool": true } },
+        "columnTotalGridColor": { "displayName": "Column total grid color", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalGridThickness": { "displayName": "Column total grid thickness", "type": { "numeric": true } },
+        "columnTotalGridStyle": {
+          "displayName": "Column total grid style",
+          "type": { "enumeration": [
+            { "value": "solid", "displayName": "Solid" },
+            { "value": "dashed", "displayName": "Dashed" },
+            { "value": "dotted", "displayName": "Dotted" }
+          ] }
+        },
+
+        "grandTotalBold": { "displayName": "Grand total bold", "type": { "bool": true } },
+        "grandTotalFontColor": { "displayName": "Grand total font color", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalBackground": { "displayName": "Grand total background", "type": { "fill": { "solid": { "color": true } } } },
+        "grandTotalFontFamily": {
+          "displayName": "Grand total font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "grandTotalFontSize": { "displayName": "Grand total font size", "type": { "numeric": true } },
+        "grandTotalLabelAlign": {
+          "displayName": "Grand total label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "grandTotalValueAlign": {
+          "displayName": "Grand total value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+
+        "subtotalBold": { "displayName": "Subtotal bold", "type": { "bool": true } },
+        "subtotalFontColor": { "displayName": "Subtotal font color", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalBackground": { "displayName": "Subtotal background", "type": { "fill": { "solid": { "color": true } } } },
+        "subtotalFontFamily": {
+          "displayName": "Subtotal font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "subtotalFontSize": { "displayName": "Subtotal font size", "type": { "numeric": true } },
+        "subtotalLabelAlign": {
+          "displayName": "Subtotal label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "subtotalValueAlign": {
+          "displayName": "Subtotal value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+
+        "columnTotalBold": { "displayName": "Column total bold", "type": { "bool": true } },
+        "columnTotalFontColor": { "displayName": "Column total font color", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalBackground": { "displayName": "Column total background", "type": { "fill": { "solid": { "color": true } } } },
+        "columnTotalFontFamily": {
+          "displayName": "Column total font",
+          "type": { "enumeration": [
+            { "value": "Segoe UI", "displayName": "Segoe UI" },
+            { "value": "Arial", "displayName": "Arial" },
+            { "value": "Calibri", "displayName": "Calibri" }
+          ] }
+        },
+        "columnTotalFontSize": { "displayName": "Column total font size", "type": { "numeric": true } },
+        "columnTotalLabelAlign": {
+          "displayName": "Column total label alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        },
+        "columnTotalValueAlign": {
+          "displayName": "Column total value alignment",
+          "type": { "enumeration": [
+            { "value": "left", "displayName": "Left" },
+            { "value": "center", "displayName": "Center" },
+            { "value": "right", "displayName": "Right" }
+          ] }
+        }
+      }
+    },
+    "numbers": {
+      "displayName": "Values",
+      "properties": {
+        "displayUnits": {
+          "displayName": "Display units",
+          "type": {
+            "enumeration": [
+              { "value": "auto", "displayName": "Auto" },
+              { "value": "none", "displayName": "None" },
+              { "value": "thousands", "displayName": "Thousands" },
+              { "value": "millions", "displayName": "Millions" },
+              { "value": "billions", "displayName": "Billions" }
+            ]
+          }
+        },
+        "decimals": { "displayName": "Decimal places", "type": { "numeric": true } },
+        "valueFontFamily": {
+          "displayName": "Value font",
+          "type": {
+            "enumeration": [
+              { "value": "Segoe UI", "displayName": "Segoe UI" },
+              { "value": "Arial", "displayName": "Arial" },
+              { "value": "Calibri", "displayName": "Calibri" }
+            ]
+          }
+        },
+        "valueFontSize": { "displayName": "Value font size", "type": { "numeric": true } },
+        "valueTextAlign": {
+          "displayName": "Value alignment",
+          "type": {
+            "enumeration": [
+              { "value": "left", "displayName": "Left" },
+              { "value": "center", "displayName": "Center" },
+              { "value": "right", "displayName": "Right" }
+            ]
+          }
+        },
+        "valueFontColor": { "displayName": "Value font color", "type": { "fill": { "solid": { "color": true } } } },
+        "valueBold": { "displayName": "Value bold", "type": { "bool": true } }
+      }
+    },
+    "layout": {
+      "displayName": "Layout",
+      "properties": {
+        "layoutJson": { "displayName": "Layout JSON", "type": { "text": true } },
+        "formulasJson": { "displayName": "Formulas JSON", "type": { "text": true } }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "select": [
+            { "for": { "in": "column" }, "dataReductionAlgorithm": { "top": {} } },
+            { "for": { "in": "category" }, "dataReductionAlgorithm": { "top": {} } },
+            { "for": { "in": "group" } },
+            { "for": { "in": "formatByField" }, "dataReductionAlgorithm": { "top": {} } },
+            { "for": { "in": "customTableValueField" }, "dataReductionAlgorithm": { "top": {} } },
+            { "for": { "in": "categoryClass" } },
+            { "for": { "in": "comments" } },
+            { "for": { "in": "filters" } }
+          ]
+        },
+        "values": {
+          "select": [
+            { "bind": { "to": "values" } },
+            { "bind": { "to": "plan" } },
+            { "bind": { "to": "forecast" } },
+            { "bind": { "to": "formatBy" } },
+            { "bind": { "to": "customTableValue" } },
+            { "bind": { "to": "tooltips" } }
+          ]
+        }
+      }
+    }
+  ],
+  "privileges": []
 }

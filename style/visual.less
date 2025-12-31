@@ -1,200 +1,800 @@
-:root {
-    --visual-surface: #f4f6fb;
-    --legend-surface: rgba(255, 255, 255, 0.88);
-    --legend-border: rgba(79, 95, 125, 0.12);
-    --highlight: #4e79a7;
-    --shadow: 0 20px 40px rgba(15, 26, 50, 0.12);
+.fm-container {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
 }
 
-.adv-tooltip {
-    background: rgba(0, 0, 0, 0.85);
-    color: #ffffff;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    line-height: 1.4;
-    pointer-events: none;
-    box-shadow: 0 12px 24px rgba(12, 16, 38, 0.45);
+.fm-message {
+  padding: 10px;
+  font-family: Segoe UI, sans-serif;
+  font-size: 12px;
 }
 
-.adv-tooltip__label {
-    font-weight: 600;
-    margin-bottom: 2px;
+.fm-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: Segoe UI, sans-serif;
+  font-size: var(--fm-table-font-size, 12px);
+  border: var(--fm-table-border, none);
+  border-radius: var(--fm-table-radius, 0px);
+  overflow: hidden;
+
+  /* preset variables (neutral palette) */
+  --fm-cell-py: 4px;
+  --fm-cell-px: 8px;
+  --fm-zebra-bg: rgba(0, 0, 0, 0.04);
+  --fm-grid-color: rgba(0, 0, 0, 0.12);
+  --fm-header-bg: transparent;
+  --fm-header-weight: 600;
+  --fm-toggle-border: rgba(0, 0, 0, 0.25);
+  --fm-toggle-bg: transparent;
+  --fm-toggle-radius: 0px;
+  --fm-header-underline: none;
+  --fm-table-border: none;
+  --fm-table-radius: 0px;
 }
 
-.adv-tooltip__value {
-    font-size: 11px;
-    opacity: 0.8;
+/* Sticky headers/columns can be unreliable with border-collapse: collapse in some WebView/table layouts.
+   This class is enabled only when freeze options are ON. */
+.fm-table.fm-freeze {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: visible;
 }
 
-.pie-chart {
-    filter: drop-shadow(var(--shadow));
-    border-radius: 16px;
-    background: var(--visual-background, radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9), rgba(245, 247, 255, 0.95) 60%, rgba(233, 238, 247, 0.9)));
-    transition: transform 0.6s ease;
+.fm-table.fm-width-manual {
+  width: max-content;
+  min-width: 100%;
 }
 
-.slice {
-    transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-    filter: drop-shadow(0 6px 12px rgba(10, 20, 44, 0.18));
+.fm-th,
+.fm-td {
+  padding: var(--fm-cell-py, 4px) var(--fm-cell-px, 8px);
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.slice-label {
-    font-family: 'Segoe UI', 'Inter', sans-serif;
-    font-size: 11px;
-    fill: #1f2533;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+.fm-table.fm-wrap .fm-th,
+.fm-table.fm-wrap .fm-td {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
 }
 
-.slice-label--outside {
-    fill: #1b2233;
+.fm-table.fm-wrap .fm-td-num {
+  word-break: normal;
 }
 
-.slice-connector {
-    fill: none;
-    stroke: rgba(31, 38, 63, 0.35);
-    stroke-width: 1px;
-    stroke-linecap: round;
-    opacity: 0.8;
+.fm-th-row,
+.fm-td-row {
+  text-align: left;
 }
 
-.slice:hover {
-    transform: scale(1.04);
-    filter: drop-shadow(0 14px 18px rgba(15, 26, 50, 0.27));
+/* Freeze is handled by scroll-synced transforms in visual.ts (sticky is unreliable in Power BI WebView). */
+
+.fm-td-num {
+  text-align: right;
 }
 
-.slice-selected {
-    stroke: #ffffff;
-    stroke-width: 4px;
-    filter: drop-shadow(0 16px 20px rgba(30, 70, 140, 0.25));
+/* Conditional formatting: icons in value cells */
+.fm-cell-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
 }
 
-.slice-dimmed {
-    opacity: 0.3 !important;
+.fm-cell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
 }
 
-.legend {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-family: 'Segoe UI', 'Inter', sans-serif;
-    font-size: 12px;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-    max-width: none;
+.fm-cell-icon svg {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+.fm-cell-icon img {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
-.legend-pill {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    box-shadow: none;
+.fm-cell-text {
+  min-width: 0;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0;
-    border-radius: 0;
-    background: transparent;
+.fm-header .fm-th {
+  font-weight: var(--fm-header-weight, 600);
+  background: var(--fm-header-bg, transparent);
+  box-shadow: var(--fm-header-underline, none);
 }
 
-.legend-item--selected {
-    background: rgba(78, 121, 167, 0.15);
+.fm-grid-h .fm-th,
+.fm-grid-h .fm-td {
+  border-bottom: var(--fm-grid-h, 1px solid var(--fm-grid-color, rgba(0, 0, 0, 0.12)));
 }
 
-.legend-item--dimmed {
-    opacity: 0.45;
+.fm-grid-v .fm-th,
+.fm-grid-v .fm-td {
+  border-right: var(--fm-grid-v, 1px solid var(--fm-grid-color, rgba(0, 0, 0, 0.12)));
 }
 
-.detail-panel {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    width: 260px;
-    max-width: calc(100% - 32px);
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(49, 64, 115, 0.1);
-    box-shadow: 8px 14px 32px rgba(14, 28, 65, 0.2);
-    font-family: 'Segoe UI', 'Inter', sans-serif;
-    color: #1b2233;
-    pointer-events: none;
+/* Freeze (sticky) helpers */
+.fm-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
-.detail-panel__title {
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #5c6479;
-    margin-bottom: 10px;
+.fm-sticky-left {
+  position: sticky;
+  left: 0;
+  z-index: 2;
 }
 
-.detail-panel__metric {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 14px;
+.fm-sticky-corner {
+  z-index: 5;
 }
 
-.detail-panel__metric-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    color: #7b8299;
-    letter-spacing: 0.2em;
+/* Freeze mask: hides scrolled content under the left frozen area (covers gaps in "card row" presets). */
+.fm-freeze-left-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 3;
 }
 
-.detail-panel__metric-value {
-    font-size: 20px;
-    color: #1b2233;
+/* Covers the top-left area (row headers width x header height) to prevent row-header cells from painting over the header on vertical scroll. */
+.fm-freeze-left-top-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
 }
 
-.detail-panel__stack {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+/* Conditional Formatting editor (in-visual popup) */
+.fm-cf-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.detail-panel__stat-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #2d364f;
+.fm-cf-panel {
+  width: min(980px, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+  overflow: auto;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: Segoe UI, sans-serif;
+  font-size: 12px;
+  box-sizing: border-box;
 }
 
-.detail-panel__stat-label {
-    opacity: 0.65;
+/* Custom Table editor: full-size panel */
+.fm-ct-panel {
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  max-height: none;
 }
 
-.detail-panel__stat-value {
-    font-weight: 600;
+.fm-cf-header {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.detail-panel__prompt {
-    margin-top: 8px;
-    font-size: 11px;
-    color: #5d667b;
-    line-height: 1.3;
+.fm-cf-tabs {
+  display: flex;
+  gap: 8px;
 }
 
-.visual-error {
-    white-space: pre-wrap;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 12px;
+.fm-cf-tab {
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fm-cf-tab-active {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
+.fm-cf-title {
+  font-weight: 600;
+}
+
+.fm-cf-toolbar {
+  display: grid;
+  grid-template-columns: 220px 200px 1fr 140px;
+  gap: 10px;
+  align-items: end;
+}
+
+.fm-cf-field {
+  display: grid;
+  gap: 4px;
+}
+
+.fm-cf-label {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+.fm-cf-select {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.fm-cf-list {
+  display: grid;
+  gap: 8px;
+}
+
+.fm-cf-style {
+  display: grid;
+  gap: 10px;
+}
+
+.fm-cf-style-title {
+  font-weight: 600;
+}
+
+.fm-cf-style-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.fm-cf-style-bound {
+  display: grid;
+  grid-template-columns: 120px 1fr 44px;
+  gap: 8px;
+  align-items: center;
+}
+
+.fm-cf-style-mid {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.fm-cf-style-note {
+  color: rgba(0, 0, 0, 0.70);
+}
+
+.fm-cf-rule {
+  display: grid;
+  grid-template-columns: 18px 1fr 44px 28px 28px 28px;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.fm-cf-sentence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.fm-cf-sentence input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.fm-cf-text {
+  color: rgba(0, 0, 0, 0.80);
+}
+
+.fm-cf-input {
+  width: 140px;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.fm-cf-color {
+  width: 44px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: transparent;
+}
+
+.fm-cf-iconbtn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fm-cf-iconbtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.fm-cf-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.fm-cf-btn {
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fm-cf-btn-primary {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
+/* Custom Table editor (reuses CF popup shell) */
+.fm-ct-section {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.fm-ct-list {
+  display: grid;
+  gap: 8px;
+}
+
+.fm-ct-row {
+  display: grid;
+  grid-template-columns: 160px minmax(220px, 1fr) 160px 90px 54px 76px 28px;
+  gap: 8px;
+  align-items: center;
+}
+
+.fm-ct-color {
+  width: 44px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: transparent;
+}
+
+.fm-ct-bold {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  user-select: none;
+}
+
+.fm-ct-child {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.fm-ct-child-top {
+  display: grid;
+  grid-template-columns: 220px minmax(220px, 1fr) 160px 90px 54px 76px 28px;
+  gap: 8px;
+  align-items: center;
+}
+
+.fm-ct-mappings {
+  display: grid;
+  gap: 6px;
+}
+
+.fm-ct-map {
+  display: grid;
+  grid-template-columns: 1fr 180px 28px 28px;
+  gap: 8px;
+  align-items: center;
+}
+
+.fm-cf-remove {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fm-zebra {
+  background: var(--fm-zebra-bg, rgba(0, 0, 0, 0.04));
+}
+
+.fm-toggle {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  margin-right: 6px;
+  padding: 0;
+  border: 1px solid var(--fm-toggle-border, rgba(0, 0, 0, 0.25));
+  background: var(--fm-toggle-bg, transparent);
+  border-radius: var(--fm-toggle-radius, 0px);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Preset pack (20+) */
+.fm-preset-clean {
+  --fm-grid-color: rgba(0, 0, 0, 0.12);
+  --fm-header-bg: transparent;
+  --fm-zebra-bg: rgba(0, 0, 0, 0.04);
+}
+
+.fm-preset-compact {
+  --fm-table-font-size: 11px;
+  --fm-cell-py: 2px;
+  --fm-cell-px: 6px;
+}
+
+.fm-preset-softzebra {
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-zebra-bg: rgba(0, 0, 0, 0.03);
+  --fm-grid-color: rgba(0, 0, 0, 0.10);
+}
+
+.fm-preset-minimal,
+.fm-preset-minimalzebra {
+  --fm-table-font-size: 12px;
+  --fm-cell-py: 4px;
+  --fm-cell-px: 10px;
+  --fm-grid-color: rgba(0, 0, 0, 0.10);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-header-weight: 700;
+  --fm-toggle-radius: 4px;
+}
+
+.fm-preset-minimal .fm-header .fm-th,
+.fm-preset-minimalzebra .fm-header .fm-th {
+  border-bottom: 1px solid var(--fm-grid-color, rgba(0, 0, 0, 0.12));
+}
+
+.fm-preset-ledger,
+.fm-preset-ledgerzebra {
+  --fm-cell-py: 3px;
+  --fm-cell-px: 10px;
+  --fm-header-bg: rgba(0, 0, 0, 0.015);
+  --fm-grid-color: rgba(0, 0, 0, 0.14);
+}
+
+.fm-preset-statement,
+.fm-preset-statementzebra {
+  --fm-table-font-size: 12px;
+  --fm-cell-py: 5px;
+  --fm-cell-px: 12px;
+  --fm-header-bg: rgba(0, 0, 0, 0.03);
+  --fm-grid-color: rgba(0, 0, 0, 0.12);
+  --fm-header-weight: 700;
+}
+
+.fm-preset-spreadsheet,
+.fm-preset-spreadsheetzebra {
+  --fm-cell-py: 4px;
+  --fm-cell-px: 8px;
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-grid-color: rgba(0, 0, 0, 0.16);
+}
+
+.fm-preset-boxed,
+.fm-preset-boxedzebra {
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-grid-color: rgba(0, 0, 0, 0.18);
+}
+
+.fm-preset-boxed .fm-th,
+.fm-preset-boxed .fm-td,
+.fm-preset-boxedzebra .fm-th,
+.fm-preset-boxedzebra .fm-td {
+  border-left: 1px solid var(--fm-grid-color, rgba(0, 0, 0, 0.12));
+}
+
+.fm-preset-airy,
+.fm-preset-airyzebra {
+  --fm-table-font-size: 12px;
+  --fm-cell-py: 7px;
+  --fm-cell-px: 14px;
+  --fm-grid-color: rgba(0, 0, 0, 0.10);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-toggle-radius: 6px;
+}
+
+.fm-preset-boldgrid,
+.fm-preset-boldgridzebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.24);
+  --fm-header-bg: rgba(0, 0, 0, 0.03);
+  --fm-header-weight: 700;
+}
+
+.fm-preset-dottedgrid {
+  --fm-grid-color: rgba(0, 0, 0, 0.20);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+}
+
+.fm-preset-dashedgrid {
+  --fm-grid-color: rgba(0, 0, 0, 0.20);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+}
+
+.fm-preset-blueprint,
+.fm-preset-blueprintzebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.18);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-toggle-border: rgba(0, 0, 0, 0.30);
+  --fm-toggle-radius: 3px;
+}
+
+.fm-preset-mono,
+.fm-preset-monozebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.14);
+  --fm-header-bg: transparent;
+  --fm-header-weight: 700;
+  --fm-toggle-border: rgba(0, 0, 0, 0.35);
+}
+
+/* Distinct patterns */
+.fm-preset-card,
+.fm-preset-cardzebra {
+  --fm-table-border: 1px solid rgba(0, 0, 0, 0.10);
+  --fm-table-radius: 8px;
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-header-weight: 700;
+  --fm-toggle-radius: 6px;
+  --fm-cell-py: 6px;
+  --fm-cell-px: 12px;
+}
+
+.fm-preset-underlineheader,
+.fm-preset-underlineheaderzebra {
+  --fm-header-bg: transparent;
+  --fm-header-weight: 700;
+  --fm-header-underline: inset 0 -2px 0 rgba(0, 0, 0, 0.18);
+  --fm-grid-color: rgba(0, 0, 0, 0.10);
+  --fm-toggle-radius: 4px;
+  --fm-cell-py: 5px;
+  --fm-cell-px: 12px;
+}
+
+.fm-preset-borderlessdividers,
+.fm-preset-borderlessdividerszebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.10);
+  --fm-header-bg: rgba(0, 0, 0, 0.015);
+  --fm-header-weight: 700;
+  --fm-toggle-radius: 4px;
+  --fm-cell-py: 4px;
+  --fm-cell-px: 12px;
+}
+
+.fm-preset-columndividers,
+.fm-preset-columndividerszebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.12);
+  --fm-header-bg: rgba(0, 0, 0, 0.02);
+  --fm-header-weight: 700;
+  --fm-toggle-radius: 4px;
+  --fm-cell-py: 4px;
+  --fm-cell-px: 10px;
+}
+
+.fm-preset-groupdivider,
+.fm-preset-groupdividerzebra {
+  --fm-grid-color: rgba(0, 0, 0, 0.12);
+  --fm-header-bg: transparent;
+  --fm-header-weight: 700;
+  --fm-header-underline: inset 0 -3px 0 rgba(0, 0, 0, 0.20);
+  --fm-toggle-radius: 4px;
+  --fm-cell-py: 5px;
+  --fm-cell-px: 12px;
+}
+
+/* Premium SaaS-style presets */
+.fm-preset-premiumsoft,
+.fm-preset-premiumsoftzebra,
+.fm-preset-premiumaccent,
+.fm-preset-premiumaccentzebra,
+.fm-preset-premiumcompact,
+.fm-preset-premiumcompactzebra {
+  /* Calm neutral palette + single accent */
+  --fm-grid-color: rgba(17, 24, 39, 0.10);
+  --fm-header-bg: transparent;
+  --fm-header-weight: 600;
+  --fm-toggle-border: rgba(59, 130, 246, 0.35);
+  --fm-toggle-radius: 999px;
+  --fm-cell-py: 8px;
+  --fm-cell-px: 14px;
+
+  /* Card surfaces */
+  --fm-card-bg: rgba(249, 250, 251, 0.95);
+  --fm-card-bg-alt: rgba(245, 247, 250, 0.95);
+  --fm-card-radius: 12px;
+  --fm-card-shadow: 0 1px 2px rgba(17, 24, 39, 0.10);
+  --fm-card-shadow-hover: 0 10px 22px rgba(17, 24, 39, 0.14);
+  --fm-accent: rgba(59, 130, 246, 0.85);
+}
+
+.fm-table.fm-preset-premiumsoft,
+.fm-table.fm-preset-premiumsoftzebra,
+.fm-table.fm-preset-premiumaccent,
+.fm-table.fm-preset-premiumaccentzebra,
+.fm-table.fm-preset-premiumcompact,
+.fm-table.fm-preset-premiumcompactzebra {
+  /* Use spacing instead of borders */
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  width: 100%;
+}
+
+.fm-preset-premiumcompact,
+.fm-preset-premiumcompactzebra {
+  --fm-table-font-size: 11px;
+  --fm-cell-py: 6px;
+  --fm-cell-px: 12px;
+  --fm-card-radius: 10px;
+}
+
+/* Muted, understated header (not dominant) */
+.fm-preset-premiumsoft .fm-header .fm-th,
+.fm-preset-premiumsoftzebra .fm-header .fm-th,
+.fm-preset-premiumaccent .fm-header .fm-th,
+.fm-preset-premiumaccentzebra .fm-header .fm-th,
+.fm-preset-premiumcompact .fm-header .fm-th,
+.fm-preset-premiumcompactzebra .fm-header .fm-th {
+  color: rgba(17, 24, 39, 0.58);
+  font-weight: 600;
+}
+
+/* Default text color (never pure black/white) */
+.fm-preset-premiumsoft .fm-th,
+.fm-preset-premiumsoft .fm-td,
+.fm-preset-premiumsoftzebra .fm-th,
+.fm-preset-premiumsoftzebra .fm-td,
+.fm-preset-premiumaccent .fm-th,
+.fm-preset-premiumaccent .fm-td,
+.fm-preset-premiumaccentzebra .fm-th,
+.fm-preset-premiumaccentzebra .fm-td,
+.fm-preset-premiumcompact .fm-th,
+.fm-preset-premiumcompact .fm-td,
+.fm-preset-premiumcompactzebra .fm-th,
+.fm-preset-premiumcompactzebra .fm-td {
+  color: rgba(17, 24, 39, 0.86);
+}
+
+/* Card rows */
+.fm-table.fm-preset-premiumsoft tbody tr,
+.fm-table.fm-preset-premiumsoftzebra tbody tr,
+.fm-table.fm-preset-premiumaccent tbody tr,
+.fm-table.fm-preset-premiumaccentzebra tbody tr,
+.fm-table.fm-preset-premiumcompact tbody tr,
+.fm-table.fm-preset-premiumcompactzebra tbody tr {
+  filter: drop-shadow(var(--fm-card-shadow));
+  transition: filter 140ms ease, transform 140ms ease;
+}
+
+.fm-table.fm-preset-premiumsoft tbody tr:hover,
+.fm-table.fm-preset-premiumsoftzebra tbody tr:hover,
+.fm-table.fm-preset-premiumaccent tbody tr:hover,
+.fm-table.fm-preset-premiumaccentzebra tbody tr:hover,
+.fm-table.fm-preset-premiumcompact tbody tr:hover,
+.fm-table.fm-preset-premiumcompactzebra tbody tr:hover {
+  filter: drop-shadow(var(--fm-card-shadow-hover));
+  transform: translateY(-1px);
+}
+
+.fm-table.fm-preset-premiumsoft tbody tr td,
+.fm-table.fm-preset-premiumaccent tbody tr td,
+.fm-table.fm-preset-premiumcompact tbody tr td {
+  background: var(--fm-card-bg);
+}
+
+.fm-table.fm-preset-premiumsoftzebra tbody tr td,
+.fm-table.fm-preset-premiumaccentzebra tbody tr td,
+.fm-table.fm-preset-premiumcompactzebra tbody tr td {
+  background: var(--fm-card-bg);
+}
+
+.fm-table.fm-preset-premiumsoftzebra tbody tr.fm-zebra td,
+.fm-table.fm-preset-premiumaccentzebra tbody tr.fm-zebra td,
+.fm-table.fm-preset-premiumcompactzebra tbody tr.fm-zebra td {
+  background: var(--fm-card-bg-alt);
+}
+
+/* Rounded corners on row cards */
+.fm-table.fm-preset-premiumsoft tbody tr td:first-child,
+.fm-table.fm-preset-premiumsoftzebra tbody tr td:first-child,
+.fm-table.fm-preset-premiumaccent tbody tr td:first-child,
+.fm-table.fm-preset-premiumaccentzebra tbody tr td:first-child,
+.fm-table.fm-preset-premiumcompact tbody tr td:first-child,
+.fm-table.fm-preset-premiumcompactzebra tbody tr td:first-child {
+  border-top-left-radius: var(--fm-card-radius);
+  border-bottom-left-radius: var(--fm-card-radius);
+}
+
+.fm-table.fm-preset-premiumsoft tbody tr td:last-child,
+.fm-table.fm-preset-premiumsoftzebra tbody tr td:last-child,
+.fm-table.fm-preset-premiumaccent tbody tr td:last-child,
+.fm-table.fm-preset-premiumaccentzebra tbody tr td:last-child,
+.fm-table.fm-preset-premiumcompact tbody tr td:last-child,
+.fm-table.fm-preset-premiumcompactzebra tbody tr td:last-child {
+  border-top-right-radius: var(--fm-card-radius);
+  border-bottom-right-radius: var(--fm-card-radius);
+}
+
+/* Single accent: subtle left stripe on row-header cell */
+.fm-table.fm-preset-premiumaccent tbody tr td.fm-td-row,
+.fm-table.fm-preset-premiumaccentzebra tbody tr td.fm-td-row {
+  box-shadow: inset 3px 0 0 rgba(59, 130, 246, 0.30);
+}
+
+.fm-preset-minimalzebra,
+.fm-preset-ledgerzebra,
+.fm-preset-statementzebra,
+.fm-preset-spreadsheetzebra,
+.fm-preset-boxedzebra,
+.fm-preset-airyzebra,
+.fm-preset-boldgridzebra,
+.fm-preset-blueprintzebra,
+.fm-preset-monozebra,
+.fm-preset-cardzebra,
+.fm-preset-underlineheaderzebra,
+.fm-preset-borderlessdividerszebra,
+.fm-preset-columndividerszebra,
+.fm-preset-groupdividerzebra {
+  --fm-zebra-bg: rgba(0, 0, 0, 0.035);
+}
+
+.fm-toggle-spacer {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+.fm-rowcell {
+  display: flex;
+  align-items: center;
+}
+
+.fm-label {
+  display: inline-block;
+  vertical-align: middle;
 }
